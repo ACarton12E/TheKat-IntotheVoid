@@ -27,6 +27,7 @@ class Player {
         CurrentAnim currentAnim;
         SDL_Texture* lastsprite;
         double timeleftdt;
+        int jumpLeft = 2;
         
         
         bool InputMapping(SDL_Window* window, const SDL_Event &event, TypeMapping type);
@@ -45,10 +46,13 @@ class Player {
         bool inTransporter = false;
         Platform Platforms_map[50];
 
+        float points = 0;
+        float multiplier = 1;
+
         SDL_FRect collide = {70, 72, 58, 134};
 
         void Create();
-        void Update(float dt, SDL_Window* window, SDL_Event event);
+        void Update(float dt, SDL_Window* window, SDL_Event event, bool isMoving);
         void Draw(SDL_Renderer* render, SDL_FPoint cam);
         void CheckCollide(float dt, 
             std::vector<Platform> &platform,

@@ -22,11 +22,6 @@
 #include "code/Player/player.h"
 #include "code/UI/UI.hpp"
 
-char* floatToString(float value) {
-    static char buffer[32];
-    snprintf(buffer, sizeof(buffer), "%.2f", value);
-    return buffer;
-}
 
 bool isMoving(bool Stop, bool onFloor, PlatformType CurrentPlat) {
     
@@ -182,7 +177,7 @@ int main(int argc, char **argv) {
         SDL_SetRenderDrawColor(render, 0, 0, 0, 255);   
         SDL_RenderClear(render);
 
-        player.Update(dt, window, event);
+        player.Update(dt, window, event, moving);
         player.CheckCollide(dt, platforms_map, collectoon_map);
 
         moving = isMoving(player.stop, player.isOnFloor, player.WhatPlatformIs);
@@ -234,21 +229,10 @@ int main(int argc, char **argv) {
         for (Platform &platforms : platforms_map) platforms.Draw(render, cam.position);
         for (Collectoon &collectoons : collectoon_map) collectoons.Draw(render, cam.position);
         
-        UI::Renderize(window, render);
+        UI::Renderize(window, render, player.points);
         player.Draw(render, cam.position);
 
-        char buffer[32];
-
-        SDL_Color colortext = {255, 255, 255, 255};
         
-        SDL_Surface* surf = TTF_RenderText_Solid(Assets::UI::Fonts::eas_analog, floatToString(player.Vel_Y), colortext);
-        SDL_Texture* text = SDL_CreateTextureFromSurface(render, surf);
-
-        SDL_Rect dest = { 0, 0, surf->w, surf->h };
-        SDL_RenderCopy(render, text, NULL, &dest);
-
-        SDL_FreeSurface(surf);
-        SDL_DestroyTexture(text);
 
 
         SDL_RenderPresent(render);

@@ -78,9 +78,9 @@ void Assets::LoadAll(SDL_Renderer *render) {
 
     Background = IMG_LoadTexture(render, "src/assets/Images/Backgrounds/background.png");
 
-    UI::Fonts::eas_analog = TTF_OpenFont("src/assets/Fonts/eas-vhs.ttf", 32);
-    UI::Fonts::monogram_ext = TTF_OpenFont("src/assets/Fonts/monogram-extended.ttf", 32);
-    UI::Fonts::uniex_mono = TTF_OpenFont("src/assets/Fonts/UnifontExMono.ttf", 32);
+    UI::Fonts::eas_analog = TTF_OpenFont("src/assets/Fonts/eas-vhs.ttf", 42);
+    UI::Fonts::monogram_ext = TTF_OpenFont("src/assets/Fonts/monogram-extended.ttf", 42);
+    UI::Fonts::uniex_mono = TTF_OpenFont("src/assets/Fonts/UnifontExMono.ttf", 42);
 
     Musics::IntotheVoid = Mix_LoadMUS("src/assets/Audio/Music/Music.ogg");
     if (!Musics::IntotheVoid) {

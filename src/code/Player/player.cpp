@@ -98,6 +98,7 @@ void Player::CheckCollide(float dt,
                     Vel_Y = 0.f;  
                     isOnFloor = true; 
                     Current_World_Speed = 150;
+                    jumpLeft = 2;
                     canStop = true;
                     inTransporter = false;
                     WhatPlatformIs = PlatformType::Normal;
@@ -108,12 +109,14 @@ void Player::CheckCollide(float dt,
                     isOnFloor = true;
                     canStop = false;
                     inTransporter = false;
+                    jumpLeft = 0;
                     WhatPlatformIs = PlatformType::Oil;
 
                 } else if (platmap.sprite == Assets::Platforms[2]) {
                     Vel_Y = 0.f;   
                     isOnFloor = true;
                     Current_World_Speed = 60;
+                    jumpLeft = 1;
                     inTransporter = false;
                     WhatPlatformIs = PlatformType::Honey;
 
@@ -121,6 +124,7 @@ void Player::CheckCollide(float dt,
                     Vel_Y = 0.f;   
                     isOnFloor = true;
                     Current_World_Speed += 200 * dt;
+                    jumpLeft = 0;
                     canStop = false;
                     inTransporter = false;
                     WhatPlatformIs = PlatformType::Ice;
@@ -129,14 +133,16 @@ void Player::CheckCollide(float dt,
                     Vel_Y = 0.f;   
                     isOnFloor = true;
                     Current_World_Speed = 150;
+                    jumpLeft = 2;
                     canStop = true;
                     inTransporter = false;
                     WhatPlatformIs = PlatformType::Spikader;
 
                 } else if (platmap.sprite == Assets::Platforms[5]) {
-                    Vel_Y = -200.f;   
+                    Vel_Y = -350.f;   
                     isOnFloor = false;
                     canStop = true;
+                    jumpLeft = 2;
                     inTransporter = false;
                     WhatPlatformIs = PlatformType::Trampoder;
 
@@ -144,6 +150,7 @@ void Player::CheckCollide(float dt,
                     Vel_Y = 0.f;   
                     isOnFloor = true;
                     canStop = true;
+                    jumpLeft = 2;
                     inTransporter = true;
                     WhatPlatformIs = PlatformType::TranspRight;
 
@@ -157,6 +164,7 @@ void Player::CheckCollide(float dt,
                     Vel_Y = 0.f;   
                     isOnFloor = true;
                     canStop = true;
+                    jumpLeft = 2;
                     inTransporter = true;
                     WhatPlatformIs = PlatformType::TranspLeft;
 
@@ -178,7 +186,11 @@ void Player::CheckCollide(float dt,
     }
 }
 
-void Player::Update(float dt, SDL_Window* window, SDL_Event event) {
+void Player::Update(float dt, SDL_Window* window, SDL_Event event, bool isMoving) {
+
+    if (isMoving) {
+        points += (Current_World_Speed * multiplier) * dt;
+    }
 
     if (!isOnFloor) {
         Vel_Y += gravity * dt;
@@ -190,12 +202,13 @@ void Player::Update(float dt, SDL_Window* window, SDL_Event event) {
     collide.y = position.y + 72;
 
     if (WhatPlatformIs == PlatformType::TranspLeft && !isOnFloor) {
-        Current_World_Speed = 150;
+        Current_World_Speed = 50;
     }   
 
-    if (InputMapping(window, event, TypeMapping::Jump)) {
+    if (InputMapping(window, event, TypeMapping::Jump) && jumpLeft > 0) {
         Vel_Y = -180;
         isOnFloor = false;
+        jumpLeft--;
     }
 
     if (canStop) {
