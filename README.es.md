@@ -140,6 +140,8 @@ xmake run
 
 ---
 
+>**¡¡AVISO!!** Los requisitos de los sistemas a parte de PC y Android no fueron verificados, ¡apoyame a saber si funcionan bien!
+
 ¡Gracias por jugar! :)
 
 <img title="" src="./src/assets/Images/Other/Car1.png" alt="content" width="252" data-align="center">
