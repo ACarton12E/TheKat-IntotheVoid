@@ -139,6 +139,7 @@ xmake run
 - **GPU**: ARM Mali-400 MP2 @ 400 MHz
 
 ---
+> **NOTE!!** System requirements for platforms other than PC and Android haven't been verified—help me find out if they work properly!
 
 Thanks for playing! :)
 
