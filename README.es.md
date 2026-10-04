@@ -142,4 +142,4 @@ xmake run
 
 ¡Gracias por jugar! :)
 
-<img title="" src="file:///home/thekat/c++/TheKat:IntotheVoid++/src/assets/Images/Other/Car1.png" alt="content" width="252" data-align="center">
+<img title="" src="./src/assets/Images/Other/Car1.png" alt="content" width="252" data-align="center">
