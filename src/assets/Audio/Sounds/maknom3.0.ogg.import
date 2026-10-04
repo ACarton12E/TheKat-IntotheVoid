@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/maknom3.0.ogg-d690ced9c9565e2e4101d71042bcb6fe.oggstr"
+
+[deps]
+
+source_file="res://media/FX/maknom3.0.ogg"
+dest_files=[ "res://.import/maknom3.0.ogg-d690ced9c9565e2e4101d71042bcb6fe.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

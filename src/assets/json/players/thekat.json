@@ -1,0 +1,21 @@
+{
+    "Name": "The Kat",
+    "Complete Name": "The Kat Michael Samy Compiz Coppertino III",
+    "Age": "??",
+
+    "Status": {
+        "Lives": 100,
+        "Hate Fish?": true,
+        "Can Swim?": true,
+        "Jump Speed": 150,
+        "Efficiency": "B"
+    },
+
+    "Animations": {
+        "Idle": "assets/Images/Kats/The Kat/Idle/idle.png",
+        "Walk": "assets/Images/Kats/The Kat/Walk/walk.png",
+        "Jump": "assets/Images/Kats/The Kat/JumpFall/jump.png",
+        "Fall": "assets/Images/Kats/The Kat/JumpFall/fall.png",
+        "Swim": "assets/Images/Kats/The Kat/Swim/swim.png"
+    }
+}

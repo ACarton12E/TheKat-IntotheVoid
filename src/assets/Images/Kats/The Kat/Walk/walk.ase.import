@@ -1,0 +1,13 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+path="res://.import/walk.ase-cd192b1a9689a5820ae68d7a46b4db08.res"
+
+[deps]
+
+source_file="res://assets/Kats/The Kat/walk/walk.ase"
+dest_files=[ "res://.import/walk.ase-cd192b1a9689a5820ae68d7a46b4db08.res" ]
+
+[params]
+

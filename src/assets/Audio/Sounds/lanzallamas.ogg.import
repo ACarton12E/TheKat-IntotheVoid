@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lanzallamas.ogg-a46b26bf6a1d1a1ab5c553bea92ab555.oggstr"
+
+[deps]
+
+source_file="res://media/FX/lanzallamas.ogg"
+dest_files=[ "res://.import/lanzallamas.ogg-a46b26bf6a1d1a1ab5c553bea92ab555.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

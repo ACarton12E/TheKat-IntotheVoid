@@ -1,0 +1,13 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+path="res://.import/idle.ase-3a3dfb2d91d2747e5d6ce62bb0983b15.res"
+
+[deps]
+
+source_file="res://assets/Kats/The Kat/Idle/idle.ase"
+dest_files=[ "res://.import/idle.ase-3a3dfb2d91d2747e5d6ce62bb0983b15.res" ]
+
+[params]
+
