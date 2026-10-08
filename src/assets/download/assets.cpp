@@ -3,7 +3,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json_fwd.hpp>
+#include "../../plugins/JSON/json.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -65,23 +65,37 @@ void Assets::LoadAll(SDL_Renderer *render) {
     if (!PlayerAnim::swim) std::cerr << "ah :( " <<  IMG_GetError() << std::endl;
 
     for (int i = 0; i < 8; i++) {
-        Platforms[i] = IMG_LoadTexture(render, ("src/assets/Images/Platforms/" + std::to_string(i + 1) + ".png").c_str());
+        std::string platpath = basePathStr + ("assets/Images/Platforms/" + std::to_string(i + 1) + ".png");
+        Platforms[i] = IMG_LoadTexture(render, platpath.c_str());
     };
 
     for (int i = 0; i < 13; i++) {
-        Collectoon::Food[i] = IMG_LoadTexture(render, ("src/assets/Images/Collectoon/Food/" + std::to_string(i + 1) + ".png").c_str());
+        std::string collpath = basePathStr + ("assets/Images/Collectoon/Food/" + std::to_string(i + 1) + ".png");
+        Collectoon::Food[i] = IMG_LoadTexture(render, collpath.c_str());
+
     };
 
-    UI::Game::PanelPoints = IMG_LoadTexture(render, "src/assets/Images/UI/Game/pointpanel.png");
-    UI::Game::PanelMultip = IMG_LoadTexture(render, "src/assets/Images/UI/Game/multpanel.png");
+    std::string panelppath = basePathStr + "assets/Images/UI/Game/pointpanel.png";
+    std::string panelmpath = basePathStr + "assets/Images/UI/Game/multpanel.png";
 
-    Background = IMG_LoadTexture(render, "src/assets/Images/Backgrounds/background.png");
+    UI::Game::PanelPoints = IMG_LoadTexture(render, panelppath.c_str());
+    UI::Game::PanelMultip = IMG_LoadTexture(render, panelmpath.c_str());
 
-    UI::Fonts::eas_analog = TTF_OpenFont("src/assets/Fonts/eas-vhs.ttf", 42);
-    UI::Fonts::monogram_ext = TTF_OpenFont("src/assets/Fonts/monogram-extended.ttf", 42);
-    UI::Fonts::uniex_mono = TTF_OpenFont("src/assets/Fonts/UnifontExMono.ttf", 42);
+    std::string back = basePathStr + "assets/Images/Backgrounds/background.png"; 
 
-    Musics::IntotheVoid = Mix_LoadMUS("src/assets/Audio/Music/Music.ogg");
+    Background = IMG_LoadTexture(render, back.c_str());
+
+    std::string analogeas = basePathStr + "assets/Fonts/eas-vhs.ttf"; 
+    std::string monogramext = basePathStr + "assets/Fonts/monogram-extended.ttf"; 
+    std::string uniexmono = basePathStr + "assets/Fonts/UnifontExMono.ttf"; 
+
+    UI::Fonts::eas_analog = TTF_OpenFont(analogeas.c_str(), 42);
+    UI::Fonts::monogram_ext = TTF_OpenFont(monogramext.c_str(), 42);
+    UI::Fonts::uniex_mono = TTF_OpenFont(uniexmono.c_str(), 42);
+    
+
+    std::string music = basePathStr + "assets/Audio/Music/Music.ogg";
+    Musics::IntotheVoid = Mix_LoadMUS(music.c_str());
     if (!Musics::IntotheVoid) {
         std::cerr << "ah :( " <<  Mix_GetError() << std::endl;
     }
