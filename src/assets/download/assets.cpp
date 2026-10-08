@@ -1,7 +1,6 @@
 #include "assets.h"
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
-#include <nlohmann/json.hpp>
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json_fwd.hpp>
