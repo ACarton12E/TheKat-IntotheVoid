@@ -55,7 +55,7 @@ Es un juego de pixel art inspirado en Nyan Cat: Lost in Space.
 ### Teclado y Ratón
 
 - **Espacio**: Saltar (normalmente doble salto)
-- **X**: Detenerse
+- **Shift Izquierdo**: Detenerse
 - **Posición del Ratón**: Apuntar / Nadar o Volar hacia
 - **Clic Izquierdo**: Disparar
 
@@ -69,7 +69,6 @@ Es un juego de pixel art inspirado en Nyan Cat: Lost in Space.
 - SDL2 Image
 - SDL2 TTF
 - SDL2 Mixer
-- XMake
 
 ### Instalación
 
@@ -92,10 +91,12 @@ sudo dnf install SDL2 SDL2_image SDL2_ttf SDL2_mixer
 # Clonar el repositorio:
 git clone https://github.com/ACarton12E/TheKat-IntotheVoid
 
-# Entrar al directorio y ejecutar con xmake:
+# Y simplemente:
 cd TheKat-IntotheVoid
-xmake run
+bash install.bash
 ```
+
+Aparecerán unos cuantos pasos: simplemente síguelos y listo. ¡Ya está compilado!
 
 ---
 
@@ -105,8 +106,8 @@ xmake run
 
 - **Lenguaje**: :hammer: `C++20`
 - **Librerías utilizadas**: `SDL2 (Mixer, TTF, Image)`
-- **Sistema de construcción**: `XMake`
-- **Versión del juego**: `0.1-a bedul`
+- **Sistema de construcción**: `bash + g++`
+- **Versión del juego**: `v0.1-a bedul`
 
 ### Requisitos del Sistema
 
