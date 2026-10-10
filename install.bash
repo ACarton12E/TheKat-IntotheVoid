@@ -313,7 +313,7 @@ case "$confirm" in
             show_header
             echo -e "$CPU"
             echo ""
-            echo -e "${GREEN}Boom! Now throw in some onion and get cooking!${NULLC}"
+            echo -e "${GREEN}Boom! Now throw in some onion and get cooking!${NULLC} Do you want to open it and try it out right now?"
 
             if [ "$DEVICE" = "linux" ]; then
                 echo "
@@ -353,4 +353,22 @@ case "$confirm" in
         echo -e "${RED}Huh? PANIC!! AHHH!"
         exit 1
         ;;
+esac
+
+read -p "Open? [y/N]: " open
+
+case "$open" in
+    n|"")
+        exit 1
+        ;;
+    y)
+        echo -e "${GREEN}Opening!...${NULLC}"
+        if [ "$DEVICE" = "linux" ]; then
+            ./build/$DEVICE/$ARCHITECTURE/TheKatITV
+        elif [ "$DEVICE" = "windows" ]; then
+            wine ./build/$DEVICE/$ARCHITECTURE/TheKatITV.exe
+        fi
+        ;;  
+    *)
+        exit 1
 esac
