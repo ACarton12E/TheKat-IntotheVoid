@@ -1,10 +1,10 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_audio.h>
-#include <SDL2/SDL_gamecontroller.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_video.h>
+#include "../include/SDL2/SDL.h"
+#include "../include/SDL2/SDL_gamecontroller.h"
+#include "../include/SDL2/SDL_render.h"
+#include "../include/SDL2/SDL_stdinc.h"
+#include "../include/SDL2/SDL_video.h"
+#include "../include/SDL2/SDL_surface.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -16,6 +16,7 @@ class WindowConfig {
     int x = SDL_WINDOWPOS_CENTERED;
     int y = SDL_WINDOWPOS_CENTERED;
     Uint32 flags = SDL_WINDOW_SHOWN;
+    SDL_Surface* icon = NULL;
 };
 
 class RenderConfig {
@@ -49,6 +50,11 @@ inline int BetterInit::loadSDL(WindowConfig wCfg, RenderConfig rCfg, SDL_Window*
         wCfg.h, 
         wCfg.flags
     );
+
+    if (wCfg.icon) {
+        SDL_SetWindowIcon(getWindow, wCfg.icon);
+        SDL_FreeSurface(wCfg.icon);
+    }
 
     if (!getWindow) {
         std::cerr << "But Why? Because " << SDL_GetError() << std::endl;
@@ -86,6 +92,11 @@ inline int BetterInit::loadSDLwithGamepad(WindowConfig wCfg, RenderConfig rCfg, 
         wCfg.h, 
         wCfg.flags
     );
+
+    if (wCfg.icon) {
+        SDL_SetWindowIcon(getWindow, wCfg.icon);
+        SDL_FreeSurface(wCfg.icon);
+    }
 
     if (!getWindow) {
         std::cerr << "But Why? Because " << SDL_GetError() << std::endl;

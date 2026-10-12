@@ -1,10 +1,10 @@
 #ifndef COLLECTOON_H
 #define COLLECTOON_H
 
-#include "SDL2/SDL.h"
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
+#include "../../include/SDL2/SDL.h"
+#include "../../include/SDL2/SDL_rect.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_stdinc.h"
 #include "../Platform/platform.h"
 
 enum class CollectoonType {

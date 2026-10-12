@@ -1,15 +1,12 @@
-#include <SDL2/SDL_error.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_gamecontroller.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_pixels.h>
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_surface.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_video.h>
-#include <SDL2/SDL.h>
+#include "include/SDL2/SDL_events.h"
+#include "include/SDL2/SDL_gamecontroller.h"
+#include "include/SDL2/SDL_mixer.h"
+#include "include/SDL2/SDL_rect.h"
+#include "include/SDL2/SDL_render.h"
+#include "include/SDL2/SDL_timer.h"
+#include "include/SDL2/SDL_ttf.h"
+#include "include/SDL2/SDL_video.h"
+#include "include/SDL2/SDL.h"
 #include <cstdlib>
 #include <iostream>
 #include <vector>
@@ -83,6 +80,7 @@ int main(int argc, char **argv) {
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOW_SHOWN,
+            Assets::icon
         }, 
         RenderConfig {
             -1,

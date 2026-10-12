@@ -1,14 +1,11 @@
 #include "player.h"
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_gamecontroller.h>
-#include <SDL2/SDL_keyboard.h>
-#include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_mouse.h>
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_scancode.h>
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_video.h>
+#include "../../include/SDL2/SDL_events.h"
+#include "../../include/SDL2/SDL_gamecontroller.h"
+#include "../../include/SDL2/SDL_mouse.h"
+#include "../../include/SDL2/SDL_rect.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_scancode.h"
+#include "../../include/SDL2/SDL_video.h"
 #include "../../plugins/betterInput/betterInput.hpp"
 #include "../../assets/download/assets.h"
 

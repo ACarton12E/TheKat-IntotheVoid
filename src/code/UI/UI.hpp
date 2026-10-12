@@ -1,7 +1,7 @@
 #pragma once
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_video.h>
+#include "../../include/SDL2/SDL_rect.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_video.h"
 #include <cmath>
 #include <cstdio>
 #include <string>

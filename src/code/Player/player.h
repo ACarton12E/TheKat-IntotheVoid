@@ -1,12 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_video.h>
+#include "../../include/SDL2/SDL.h"
+#include "../../include/SDL2/SDL_events.h"
+#include "../../include/SDL2/SDL_rect.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_stdinc.h"
+#include "../../include/SDL2/SDL_video.h"
 #include <vector>
 #include "../Platform/platform.h"
 #include "../Collectoon/collectoon.h"

@@ -1,8 +1,8 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_render.h>
+#include "../../include/SDL2/SDL_rect.h"
+#include "../../include/SDL2/SDL_render.h"
 
 enum class PlatformType {
     Normal, Oil, 
