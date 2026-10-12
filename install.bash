@@ -10,6 +10,7 @@ WHITE='\033[1;37m'
 NULLC='\033[0m'
 BLACK='\033[0;30m'
 
+LOADTEXT="Cooking..."
 
 show_loading() {
     local pid=$1
@@ -25,7 +26,7 @@ show_loading() {
         fi
 
         local temp=${spinstr#?}
-        printf "\r [%c] Cooking... " "$spinstr"
+        printf "\r [%c] $LOADTEXT " "$spinstr"
         spinstr=$temp${spinstr%"$temp"}
         sleep $delay
         printf "\r"
@@ -96,6 +97,7 @@ ARCHITECTURE=""
 while true; do
     echo "1) Linux"
     echo "2) Windows"
+    echo "3) Android"
     echo ""
     echo "Choose wisely... or simply select your device :|"
 
@@ -138,6 +140,24 @@ while true; do
             "
             echo "Windows?... Open the windows! A little more work."
             DEVICE="windows"
+            break
+            ;;
+        3) 
+        show_header
+        echo -e " ${GREEN}
+ ╲                    ╱ 
+  ╲                  ╱  
+   ╲ ▐████████████▋ ╱   
+   ▐████████████████▋   
+  ██▋ ▜██████████  ▜██  
+▐███  ▐██████████▋ ▐███▋
+████████████████████████
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃
+${NULLC}
+        "
+            echo "Android! Wow, you'll need to put in more work."
+            DEVICE="android"
             break
             ;;
         *)
@@ -236,76 +256,182 @@ while true; do
                 echo ""
                 ;;
         esac
+    elif [ "$DEVICE" = "android" ]; then
+        #echo "1) Release"
+        echo "1) Debug"
+
+        read -p "Okay! I'll be waiting: " archandroid
+
+        case "$archandroid" in
+            #1)
+                #show_header
+                #echo -e "$CPU"
+                #echo ""
+                #echo "Surfing the seas of the releases!"
+                #ARCHITECTURE="RELEASE"
+                #break
+                #;;
+            1)
+                show_header
+                echo -e "$CPU"
+                echo ""
+                echo "Hmm, are you a supervisor or something like that?"
+                ARCHITECTURE="DEBUG"
+                break
+                ;;
+            *)
+                show_header
+                echo -e "$CPU"
+                echo "ZZZ... UH! sorry"
+                ;;
+        esac
     fi
 done
 
 
-echo "Are you sure? Here is the data: arch $ARCHITECTURE, device $DEVICE"
-read -p "[Y/n] " confirm
+confirm=$(echo "$confirm" | tr '[:upper:]' '[:lower:]')
+
+confirmclear=$(echo "$confirm" | tr '[:upper:]' '[:lower:]')
+
+if [ "$DEVICE" != "android" ]; then
+    echo "Are you sure? Here is the data: arch $ARCHITECTURE, device $DEVICE"
+    read -p "[Y/n] " confirm
+
+else
+
+    #if ! command -v gradle >/dev/null 2>&1; then
+        #echo "... Hey! ${RED}You don't have Gradle!${NULLC} Install it using your package manager or via SDKMAN!"
+        #exit 1
+    #fi
+
+    if ! command -v adb >/dev/null 2>&1; then
+        echo -e "${YELLOW}[WARNING]: Oh, I see you don't have ADB on your system; I recommend installing it!.${NULLC}"
+    fi
+
+    ADBDEVICE=$(adb devices | grep -v "List of devices attached" | grep -v "^$" | wc -l)
+    echo "Are you sure? Here is the data: launch $ARCHITECTURE for $DEVICE"
+    echo "Hold on a second! Do you want your project to be squeaky clean?"
+    
+
+    read -p "[y/N] " confirmclear
+
+    while true; do
+        case "$confirmclear" in
+            y)
+
+                rm -rf app/.cxx 
+                gradle clean &
+
+                LOADTEXT="Cleaning... "
+                show_loading $!
+
+                wait $!
+                RESULT=$?
+                break
+                ;;
+            n|"")  
+                
+                break
+                ;;
+            *)  
+                break
+                ;;
+        esac
+    done
+
+    show_header
+    echo -e "$CPU"
+    echo ""
+
+    echo "Alright, time to compile?"
+    
+    read -p "[Y/n] " confirm
+fi
+
+
 
 confirm=$(echo "$confirm" | tr '[:upper:]' '[:lower:]')
+APKPATH=""
 
 case "$confirm" in
     y|"")
         show_header
-        mkdir -p build
+        mkdir -p builder
         echo ""
         echo "Let's go! Get your tomato sauce ready; I'm going to compile now... just a sec..."
         echo ""
 
-        if [ "$ARCHITECTURE" = "x86_64" ] ; then 
-            if [ "$DEVICE" = "linux" ]; then
-                mkdir -p build/linux/x86_64
-                g++ -v $(find src -type f -name "*.cpp") -O2 -o build/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
-                
+        if [ "$DEVICE" = "linux" ]; then
+            if [ "$ARCHITECTURE" = "x86_64" ] ; then 
+                mkdir -p builder/linux/x86_64
+                g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                 show_loading $!
-
                 wait $!
                 RESULT=$?
-
                 if [ $RESULT -eq 0 ]; then
-                    cp -r src/assets build/linux/x86_64/
+                    cp -r src/assets builder/linux/x86_64/
                 fi
-            elif [ "$DEVICE" = "windows" ]; then
-                mkdir -p build/windows/x86_64
-                x86_64-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
-                
+            elif [ "$ARCHITECTURE" = "x86" ]; then 
+                mkdir -p builder/linux/x86
+                g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                 show_loading $!
-
                 wait $!
                 RESULT=$?
-
                 if [ $RESULT -eq 0 ]; then
-                    cp lib/Windows/*.dll build/windows/x86_64/
-                    cp -r src/assets build/windows/x86_64/
+                    cp -r src/assets builder/linux/x86/
                 fi
             fi
-        elif [ "$ARCHITECTURE" = "x86" ]; then 
-            if [ "$DEVICE" = "linux" ]; then
-                mkdir -p build/linux/x86
-                g++ -v $(find src -type f -name "*.cpp") -O2 -o build/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
-                
+        elif [ "$DEVICE" = "windows" ]; then
+            if [ "$ARCHITECTURE" = "x86_64" ] ; then 
+                mkdir -p builder/windows/x86_64
+                x86_64-w64-mingw32-windres src/resource.rc builder/windows/x86_64/resource.o  
+                x86_64-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
+                LOADTEXT="Cooking... "
                 show_loading $!
-
                 wait $!
                 RESULT=$?
-
                 if [ $RESULT -eq 0 ]; then
-                    cp -r src/assets build/linux/x86/
+                    cp src/lib/Windows/*.dll builder/windows/x86_64/
+                    cp -r src/assets builder/windows/x86_64/
                 fi
-            elif [ "$DEVICE" = "windows" ]; then
-                mkdir -p build/windows/x86
-                i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
-                
+            elif [ "$ARCHITECTURE" = "x86" ]; then 
+                mkdir -p builder/windows/x86
+                i686-w64-mingw32-windres src/resource.rc builder/windows/x86_64/resource.o  
+                i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                 show_loading $!
-
                 wait $!
                 RESULT=$?
-
                 if [ $RESULT -eq 0 ]; then
-                    cp lib/Windows/*.dll build/windows/x86/
-                    cp -r src/assets build/windows/x86/
+                    cp src/lib/Windows/*.dll builder/windows/x86/
+                    cp -r src/assets builder/windows/x86/
                 fi
+            fi
+        fi 
+        if [ "$ARCHITECTURE" = "RELEASE" ]; then
+
+
+            CC= CXX= gradle clean assembleRelease -Pandroid.externalNativeBuild.cmake.arguments="-DSDL2MIXER_VENDORED=ON -DSDL2IMAGE_VENDORED=ON -DSDL2TTF_VENDORED=ON" &
+            LOADTEXT="Cooking... "
+            show_loading $!
+            
+            wait $!
+            RESULT=$?
+
+            if [ $RESULT -eq 0 ]; then
+                APKPATH="app/build/outputs/apk/release/app-release-unsigned.apk"
+            fi
+        elif [ "$ARCHITECTURE" = "DEBUG" ]; then
+
+            CC= CXX= gradle clean assembleDebug -Pandroid.externalNativeBuild.cmake.arguments="-DSDL2MIXER_VENDORED=ON -DSDL2IMAGE_VENDORED=ON -DSDL2TTF_VENDORED=ON" &
+            LOADTEXT="Cooking... "
+
+            show_loading $!
+
+            wait $!
+            RESULT=$?
+
+             if [ $RESULT -eq 0 ]; then
+                APKPATH="app/build/outputs/apk/debug/app-debug.apk"
             fi
         fi
 
@@ -333,6 +459,10 @@ case "$confirm" in
                                 convert it to a ZIP for you—want me to? 
                            (I might not have actually done it yet, heh heh).
                 "
+            elif [ "$DEVICE" = "android" ]; then
+                echo "
+                    ¡Your APK was saved in app/build/outputs/apk!
+                "
             fi
 
             echo ""
@@ -355,7 +485,12 @@ case "$confirm" in
         ;;
 esac
 
-read -p "Open? [y/N]: " open
+if [ "$DEVICE" != "android" ]; then
+    read -p "Open? [y/N]: " open
+else
+    read -p "Install? (Device Detected: $ADBDEVICE) [y/N]: " open
+    
+fi
 
 case "$open" in
     n|"")
@@ -364,11 +499,20 @@ case "$open" in
     y)
         echo -e "${GREEN}Opening!...${NULLC}"
         if [ "$DEVICE" = "linux" ]; then
-            ./build/$DEVICE/$ARCHITECTURE/TheKatITV
+            ./builder/$DEVICE/$ARCHITECTURE/TheKatITV
         elif [ "$DEVICE" = "windows" ]; then
-            wine ./build/$DEVICE/$ARCHITECTURE/TheKatITV.exe
+            wine ./builder/$DEVICE/$ARCHITECTURE/TheKatITV.exe
+        elif [ "$DEVICE" = "android" ]; then
+            if [ $ADBDEVICE -eq 1 ]; then
+                adb install $APKPATH
+            else 
+                echo "... There's no one around here!"
+                exit 1
+            fi
         fi
+        exit 0
         ;;  
     *)
         exit 1
+        ;;
 esac

@@ -1,9 +1,10 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_ttf.h>
+#include "../../include/SDL2/SDL.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_ttf.h"
 #include <string>
-#include <SDL2/SDL_mixer.h>
+#include "../../include/SDL2/SDL_mixer.h"
+#include "../../include/SDL2/SDL_image.h"
 
 
 
@@ -25,6 +26,7 @@ namespace Assets {
 
     inline SDL_Texture* Background;
     inline SDL_Texture* Platforms[8];
+    inline SDL_Surface* icon;
 
     namespace Collectoon {
         inline SDL_Texture* Food[13];
