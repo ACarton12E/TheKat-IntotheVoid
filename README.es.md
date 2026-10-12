@@ -107,7 +107,7 @@ Aparecerán unos cuantos pasos: simplemente síguelos y listo. ¡Ya está compil
 - **Lenguaje**: :hammer: `C++20`
 - **Librerías utilizadas**: `SDL2 (Mixer, TTF, Image)`
 - **Sistema de construcción**: `bash + g++`
-- **Versión del juego**: `v0.1-a bedul`
+- **Versión del juego**: `v0.12-a qua`
 
 ### Requisitos del Sistema
 
