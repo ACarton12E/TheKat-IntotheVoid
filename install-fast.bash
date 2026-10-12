@@ -144,6 +144,7 @@ else
             fi
         elif [ "$DEVICE" = "windows" ]; then
             mkdir -p build/windows/x86_64
+            x86_64-w64-mingw32-windres src/resource.rc build/windows/x86_64/resource.o  
             x86_64-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                     
             show_loading $!
@@ -152,7 +153,7 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp lib/Windows/*.dll build/windows/x86_64/
+                cp src/lib/Windows/*.dll build/windows/x86_64/
                 cp -r src/assets build/windows/x86_64/
             fi
         fi
@@ -171,6 +172,7 @@ else
             fi
         elif [ "$DEVICE" = "windows" ]; then
             mkdir -p build/windows/x86
+            i686-w64-mingw32-windres -F pe-i386 src/resource.rc build/windows/x86/resource.o
             i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                     
             show_loading $!
@@ -179,7 +181,7 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp lib/Windows/*.dll build/windows/x86/
+                cp src/lib/Windows/*.dll build/windows/x86/
                 cp -r src/assets build/windows/x86/
             fi
         fi
