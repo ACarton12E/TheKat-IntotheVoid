@@ -107,7 +107,7 @@ A few steps will appear, just follow them, and that's it! It's compiled!
 - **Language**: :hammer: `C++20`
 - **Libraries**: `SDL2 (Mixer, TTF, Image)`
 - **Build System**: `Bash + g++`
-- **Game Version**: `v0.1-a bedul`
+- **Game Version**: `v0.2-a qua`
 
 ### System Requirements
 
