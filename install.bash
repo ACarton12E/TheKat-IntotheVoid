@@ -39,7 +39,7 @@ GXXVERSION=$(g++ -dumpfullversion)
 show_header() {
     clear
     echo ""
-    echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.1a bedul ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
+    echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.12-a qua ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
     echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}"
     echo ""
 }
@@ -66,7 +66,7 @@ ${YELLOW}░░${WHITE}▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓${GREEN}█�
 clear
 
 echo ""
-echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.1a bedul ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
+echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.12-a qua ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
 
 # --- THE KATROS ASCII ART ---
 echo -e "              ┌──┐    ┌──┐              "
@@ -88,7 +88,7 @@ echo -e "          ${YELLOW}▒▒▒▒▒${WHITE}▓▓▓▓▓▓▓▓▓�
 echo -e "                                        "
 
 echo ""
-echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}... I have ${RED}2 ${BLUE}pills${NULLC}..."
+echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}... I ${GREEN}have ${RED}3 ${BLUE}pills${NULLC}..."
 echo ""
 
 DEVICE=""
