@@ -44,6 +44,8 @@ void Platform::Regenerate(SDL_Window* window) {
     int RowRandi = -5 + (rand() % 11);
     int RowSepare = RowRandi * 2;
 
+    velocity = 12 + (rand() % 24);
+
     position.x = Widthwin + (sizex * 64);
     position.y = RowSepare * 64;
     sprite = LoadTexture((PlatformType)(anim));
@@ -61,7 +63,7 @@ void Platform::Update(float dt, SDL_Window *window, float WorldSpeed, bool Movin
         currentFrame = 0;
     } else {
         timeleftdt += dt;
-        currentFrame = (int)(timeleftdt * 12) % 4;
+        currentFrame = (int)(timeleftdt * velocity) % 4;
     }
 
     if (position.x < -128 * sizex) {

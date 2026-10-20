@@ -1,0 +1,77 @@
+#pragma once
+#include "../../include/SDL2/SDL.h"
+#include "../../include/SDL2/SDL_render.h"
+#include "../../include/SDL2/SDL_ttf.h"
+#include <string>
+#include "../../include/SDL2/SDL_mixer.h"
+#include "../../include/SDL2/SDL_image.h"
+
+
+
+namespace Assets {
+
+    extern std::string CurrentKat;
+
+    namespace Musics {
+        inline Mix_Music* IntotheVoid;
+    }
+
+    namespace PlayerAnim {
+        inline SDL_Texture* idle;
+        inline SDL_Texture* walk;
+        inline SDL_Texture* jump;
+        inline SDL_Texture* fall;
+        inline SDL_Texture* swim;
+        inline SDL_Texture* damage;
+    };
+
+    inline SDL_Texture* Background;
+    inline SDL_Texture* Platforms[8];
+    inline SDL_Surface* icon;
+
+    namespace Collectoon {
+        inline SDL_Texture* Food[13];
+
+        inline SDL_Texture* Aloy;
+
+        inline SDL_Texture* Disk;
+    };
+
+    namespace Enemies {
+        namespace Fishoder {
+            inline SDL_Texture* Normal;
+            inline SDL_Texture* Ouch;
+        }
+        namespace Shadowner {
+            inline SDL_Texture* Normal;
+            inline SDL_Texture* Ouch;
+        }
+        namespace Spikader {
+            inline SDL_Texture* Normal;
+        }
+    }
+
+    namespace UI {
+
+        namespace Game {
+            inline SDL_Texture* PanelPoints;
+            inline SDL_Texture* PanelMultip;
+
+            namespace Status {
+                inline SDL_Texture* StatusPanel;
+                inline SDL_Texture* LiveRoulete;
+                inline SDL_Texture* DurRoulete;
+                inline SDL_Texture* EnergyRoulete;
+            }
+        }
+
+        namespace Fonts {
+            inline TTF_Font* eas_analog;
+            inline TTF_Font* uniex_mono;
+            inline TTF_Font* monogram_ext;
+        };
+    };
+
+    void LoadAll(SDL_Renderer* render);
+    void SetCurrentKat(const std::string& jsonPath);
+}

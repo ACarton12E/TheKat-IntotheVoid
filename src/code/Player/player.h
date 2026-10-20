@@ -10,53 +10,86 @@
 #include <vector>
 #include "../Platform/platform.h"
 #include "../Collectoon/collectoon.h"
+#include "../Enemies/Fishoder/fishoder.h"
+#include "../Enemies/Shadowner/shadowner.h"
+#include "../Enemies/Spikader/spikader.h"
 
 enum class CurrentAnim {
-    Idle, Walk, Jump, Fall, Swim
+    Idle, Walk, Jump, Fall, Swim, Damage
 };
 
 enum class TypeMapping {
     Jump, Stop
 };
 
+enum class CurrentAction {
+    Fisheated, Normal, Damage, Stoped, Critical, ASKE, Power
+};
+
 class Player {
     private:
 
-        SDL_Texture* sprite;
-        int currentFrame;
+        static SDL_Texture* sprite;
+        static int currentFrame;
         CurrentAnim currentAnim;
         SDL_Texture* lastsprite;
         double timeleftdt;
-        int jumpLeft = 2;
+        static int jumpLeft;
         
         
-        bool InputMapping(SDL_Window* window, const SDL_Event &event, TypeMapping type);
+        static bool InputMapping(SDL_Window* window, const SDL_Event &event, TypeMapping type);
         SDL_Texture* loadTexture(CurrentAnim anim);
 
     public:
 
-        float Current_World_Speed = 150.f;
-        float gravity = 150.f;
-        SDL_FPoint position;
+        static float Current_World_Speed;
+        static float Apply_World_Speed;
+
+        static float gravity;
+        static bool fisheated;
+        float fishdur = 0;
+
+        static SDL_FPoint position;
         PlatformType WhatPlatformIs;
-        float Vel_Y = 0.f;
-        bool stop = false;
-        bool canStop = true;
-        bool isOnFloor = true;
+        static float Vel_Y;
+        static bool stop;
+        static bool canStop;
+
+        static bool wasAttacked;
+        static bool Dead;
+        
+        static bool isOnFloor;
         bool inTransporter = false;
         Platform Platforms_map[50];
+        static CurrentAction currentAction;
 
-        float points = 0;
-        float multiplier = 1;
+        static float points;
+        static float lives;
+        static float multiplier;
+
+        static float CooldownDamage; 
 
         SDL_FRect collide = {70, 72, 58, 134};
 
         void Create();
         void Update(float dt, SDL_Window* window, SDL_Event event, bool isMoving);
-        void Draw(SDL_Renderer* render, SDL_FPoint cam);
+
+        class Functions {
+            public:
+            void Draw(SDL_Renderer* render, SDL_FPoint cam);
+            static void ActionsAndStuffs(float dt, SDL_Window* window, SDL_Event event, bool isMoving);
+        };
+
+        Functions func;
+
         void CheckCollide(float dt, 
             std::vector<Platform> &platform,
             std::vector<Collectoon> &collectoon
+        );
+        void CheckCollideEntitys(float dt,
+            std::vector<Fishoder> &fish,
+            std::vector<Shadowner> &shad,
+            std::vector<Spikader> &spik
         );
 };
 

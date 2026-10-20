@@ -15,14 +15,16 @@ class Platform {
     private:
         
         int currentFrame = 0;
-        float timeleftdt = 0;
+        float timeleftdt = 0; 
     public:
+        
+        float velocity = 12;
         
         SDL_FPoint position;
         int sizex;
         SDL_Texture* sprite;
 
-        SDL_FRect Collide = {0, 0, 64, 64};
+        SDL_FRect Collide = {-1000, -1000, 64, 64};
 
         SDL_Texture* LoadTexture(PlatformType type);
         void Create(SDL_FPoint pos, PlatformType type, int sizexn);

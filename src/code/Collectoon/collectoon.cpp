@@ -67,6 +67,10 @@ void Collectoon::Update(float dt, SDL_Window *window, float WorldSpeed, bool isM
         Regenerate(window);
     }
 
+    if (opacity <= 0) {
+        Regenerate(window);
+    }
+
     collide.x = position.x;
     collide.y = position.y;
 }

@@ -14,6 +14,9 @@ add_library(main SHARED
     ${GAME_ROOT}/code/Collectoon/collectoon.cpp
     ${GAME_ROOT}/code/Platform/platform.cpp
     ${GAME_ROOT}/code/Player/player.cpp
+    ${GAME_ROOT}/code/Enemies/Fishoder/fishoder.cpp
+    ${GAME_ROOT}/code/Enemies/Spikader/spikader.cpp
+    ${GAME_ROOT}/code/Enemies/Shadowner/shadowner.cpp
 )
 
 target_include_directories(main PRIVATE 
