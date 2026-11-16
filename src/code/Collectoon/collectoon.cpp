@@ -7,6 +7,10 @@
 #include <cstdlib>
 
 SDL_Texture* Collectoon::LoadTexture(CollectoonType ct, FoodType ft) {
+
+    foodType = ft;
+    type = ct;
+
     switch (ct) {
         default: switch (ft) {
             case FoodType::Ketchup: return Assets::Collectoon::Food[0]; break;

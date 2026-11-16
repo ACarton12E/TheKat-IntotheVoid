@@ -13,6 +13,8 @@ class Shadowner {
         float rotation;
         bool active = true;
         bool attack = true;
+        bool dead = false;
+        float toY = 0;
         SDL_FRect collide = {-1000, -1000, 66, 66};
 
         void Create(SDL_FPoint pos, bool activated);

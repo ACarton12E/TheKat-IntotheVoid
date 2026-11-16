@@ -2,6 +2,10 @@
 #include "../include/SDL2/SDL_gamecontroller.h"
 #include <cstring>
 
+enum class swipeDir {
+    Right, Up, Down, Left
+};
+
 class BetterInput {
     public:
         class Keyboard {
@@ -24,6 +28,8 @@ class BetterInput {
             static bool onPressedwithPosition(Uint8 button, SDL_Point &mousepos);
 
             static bool onRelease(const SDL_Event& event, Uint8 button);
+
+            static bool onSwipe(const SDL_Event& event, Uint8 button, swipeDir swipe);
         };
         
         class Gamepad {
@@ -78,16 +84,22 @@ inline bool BetterInput::Keyboard::onJustRelease(const SDL_Event &event, SDL_Sca
 
 // Input Mouse
 
-inline bool BetterInput::Mouse::onJustPressed(const SDL_Event &event, Uint8 button) {
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-        if (event.button.button == button) {
-            return true;
-        }
-    }
-    return false;
-}
- 
 static Uint32 prev_mousestate = 0;
+
+inline bool BetterInput::Mouse::onJustPressed(const SDL_Event &event, Uint8 button) {
+    Uint32 current_mousestate = SDL_GetMouseState(NULL, NULL);
+    Uint32 mask = 0;
+
+    if (button == SDL_BUTTON_LEFT)   mask = SDL_BUTTON_LMASK;
+    if (button == SDL_BUTTON_RIGHT)  mask = SDL_BUTTON_RMASK;
+    if (button == SDL_BUTTON_MIDDLE) mask = SDL_BUTTON_MMASK;
+
+    bool pressed = (current_mousestate & mask) && !(prev_mousestate & mask);
+
+    prev_mousestate = current_mousestate;
+    return pressed;
+}
+
 
 inline bool BetterInput::Mouse::onJustPressedwithPosition(const SDL_Event &event, Uint8 button, SDL_Point &mousepos) {
     Uint32 current_mousestate = SDL_GetMouseState(&mousepos.x, &mousepos.y);
@@ -132,6 +144,50 @@ inline bool BetterInput::Mouse::onRelease(const SDL_Event &event, Uint8 button) 
             return true;
         }
     }
+    return false;
+}
+
+inline bool BetterInput::Mouse::onSwipe(const SDL_Event& event, Uint8 button, swipeDir swipe) {
+    static SDL_Point start[4] = { {0, 0}, {0, 0}, {0, 0}, {0, 0} };
+    static bool isSwiping[4] = { false, false, false, false };
+
+    int dirIdx = (int)swipe;
+    int mouseX, mouseY;
+    Uint32 buttonsState = SDL_GetMouseState(&mouseX, &mouseY);
+
+    Uint32 mask = 0;
+    if (button == SDL_BUTTON_LEFT)   mask = SDL_BUTTON_LMASK;
+    if (button == SDL_BUTTON_RIGHT)  mask = SDL_BUTTON_RMASK;
+    if (button == SDL_BUTTON_MIDDLE) mask = SDL_BUTTON_MMASK;
+
+    bool isDown = (buttonsState & mask) != 0;
+
+    if (isDown && !isSwiping[dirIdx]) {
+        start[dirIdx] = { mouseX, mouseY };
+        isSwiping[dirIdx] = true;
+        return false;
+    }
+
+    if (!isDown && isSwiping[dirIdx]) {
+        isSwiping[dirIdx] = false;
+
+        int dx = mouseX - start[dirIdx].x;
+        int dy = mouseY - start[dirIdx].y;
+        int minDistance = 50;
+
+        if (std::abs(dx) > std::abs(dy)) {
+            if (std::abs(dx) > minDistance) {
+                if (dx > 0 && swipe == swipeDir::Right) return true;
+                if (dx < 0 && swipe == swipeDir::Left)  return true;
+            }
+        } else {
+            if (std::abs(dy) > minDistance) {
+                if (dy > 0 && swipe == swipeDir::Down) return true;
+                if (dy < 0 && swipe == swipeDir::Up)   return true;
+            }
+        }
+    }
+
     return false;
 }
 

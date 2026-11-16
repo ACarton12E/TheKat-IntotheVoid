@@ -17,6 +17,10 @@ add_library(main SHARED
     ${GAME_ROOT}/code/Enemies/Fishoder/fishoder.cpp
     ${GAME_ROOT}/code/Enemies/Spikader/spikader.cpp
     ${GAME_ROOT}/code/Enemies/Shadowner/shadowner.cpp
+    ${GAME_ROOT}/scenes/arcade/arcade.cpp
+    ${GAME_ROOT}/code/UI/UI.cpp
+    ${GAME_ROOT}/plugins/particles/particle.cpp
+    ${GAME_ROOT}/code/Water/water.cpp
 )
 
 target_include_directories(main PRIVATE 

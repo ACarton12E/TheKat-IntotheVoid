@@ -37,7 +37,8 @@ class BetterInit {
 };
 
 inline int BetterInit::loadSDL(WindowConfig wCfg, RenderConfig rCfg, SDL_Window* &getWindow, SDL_Renderer* &getRender) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS | SDL_INIT_TIMER) < 0) {
         std::cerr << "Oh no )= ~> " << SDL_GetError() << std::endl;
         return 1;
     }
@@ -79,7 +80,8 @@ inline int BetterInit::loadSDL(WindowConfig wCfg, RenderConfig rCfg, SDL_Window*
 }
 
 inline int BetterInit::loadSDLwithGamepad(WindowConfig wCfg, RenderConfig rCfg, SDL_GameController* &getController, SDL_Window* &getWindow, SDL_Renderer* &getRender) {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER | SDL_INIT_EVENTS | SDL_INIT_TIMER) < 0) {
         std::cerr << "Oh no )= ~> " << SDL_GetError() << std::endl;
         return 1;
     }

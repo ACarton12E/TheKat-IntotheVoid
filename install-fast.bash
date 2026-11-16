@@ -131,8 +131,8 @@ else
 
     if [ "$ARCHITECTURE" = "x86_64" ] ; then 
         if [ "$DEVICE" = "linux" ]; then
-            mkdir -p build/linux/x86_64
-            g++ -v $(find src -type f -name "*.cpp") -O2 -o build/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
+            mkdir -p builder/linux/x86_64
+            g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                     
             show_loading $!
 
@@ -140,11 +140,11 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp -r src/assets build/linux/x86_64/
+                cp -r src/assets builder/linux/x86_64/
             fi
         elif [ "$DEVICE" = "windows" ]; then
-            mkdir -p build/windows/x86_64
-            x86_64-w64-mingw32-windres src/resource.rc build/windows/x86_64/resource.o  
+            mkdir -p builder/windows/x86_64
+            x86_64-w64-mingw32-windres src/resource.rc builder/windows/x86_64/resource.o
             x86_64-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                     
             show_loading $!
@@ -153,14 +153,14 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp src/lib/Windows/*.dll build/windows/x86_64/
-                cp -r src/assets build/windows/x86_64/
+                cp src/lib/Windows/*.dll builder/windows/x86_64/
+                cp -r src/assets builder/windows/x86_64/
             fi
         fi
     elif [ "$ARCHITECTURE" = "x86" ]; then 
         if [ "$DEVICE" = "linux" ]; then
-            mkdir -p build/linux/x86
-            g++ -v $(find src -type f -name "*.cpp") -O2 -o build/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
+            mkdir -p builder/linux/x86
+            g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                     
             show_loading $!
 
@@ -168,12 +168,12 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp -r src/assets build/linux/x86/
+                cp -r src/assets builder/linux/x86/
             fi
         elif [ "$DEVICE" = "windows" ]; then
-            mkdir -p build/windows/x86
-            i686-w64-mingw32-windres -F pe-i386 src/resource.rc build/windows/x86/resource.o
-            i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o build/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
+            mkdir -p builder/windows/x86
+            i686-w64-mingw32-windres -F pe-i386 src/resource.rc builder/windows/x86/resource.o
+            i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                     
             show_loading $!
 
@@ -181,8 +181,8 @@ else
             RESULT=$?
 
             if [ $RESULT -eq 0 ]; then
-                cp src/lib/Windows/*.dll build/windows/x86/
-                cp -r src/assets build/windows/x86/
+                cp src/lib/Windows/*.dll builder/windows/x86/
+                cp -r src/assets builder/windows/x86/
             fi
         fi
     fi
@@ -204,7 +204,7 @@ else
             "
 
             if [ "$OPEN" = "y" ]; then
-                ./build/$DEVICE/$ARCHITECTURE/TheKatITV
+                ./builder/$DEVICE/$ARCHITECTURE/TheKatITV
             fi
         elif [ "$DEVICE" = "windows" ]; then
             echo "
@@ -217,7 +217,7 @@ else
             "
 
             if [ "$OPEN" = "y" ]; then
-                wine ./build/$DEVICE/$ARCHITECTURE/TheKatITV.exe
+                wine ./builder/$DEVICE/$ARCHITECTURE/TheKatITV.exe
             fi
         fi
 

@@ -15,6 +15,7 @@ void Shadowner::Regenerate(SDL_Window *window) {
     active = ((rand() % 100) < 20);
     timeleftdt = 0;
     attack = true;
+    dead = false;
     collide.y = -1000;
     position = {
         (float)w, (float)(-16 + (rand() % 32)) * 128
@@ -35,30 +36,37 @@ void Shadowner::Update(float dt, SDL_Window *window, SDL_FPoint playerPos, float
 
     float atan = atan2(dy, dx);
     float distance = sqrt(pow(dx, 2) + pow(dy, 2));
-
-    if (attack && active) {
-        if (distance < 400 && activePlayer) {
-            rotation += (((atan * (180 / M_PI)) + 180) - rotation) * (20 * dt);
-            position.x += (cos(atan) * 240) * dt;
-            position.y += (sin(atan) * 240) * dt;
+    if (!dead) {
+        if (attack && active) {
+            if (distance < 400 && activePlayer) {
+                rotation += (((atan * (180 / M_PI)) + 180) - rotation) * (20 * dt);
+                position.x += (cos(atan) * 240) * dt;
+                toY = (sin(atan) * 240) * dt;
+                position.y += toY;
+            } else {
+                rotation += ((0 + (sin(timeleftdt * 12) * 0.5)) - rotation) * (20 * dt);
+                toY = cos(timeleftdt * 12) * 0.5;
+                position.y += toY;
+            }
         } else {
-            rotation += ((0 + (sin(timeleftdt * 12) * 0.5)) - rotation) * (20 * dt);
-            position.y += cos(timeleftdt * 12) * 0.5;
+            position.x -= 150 * dt;
+            flip = SDL_FLIP_NONE;
+            rotation = 0;
+        }
+
+        float normalizedRotation = rotation;
+        while (normalizedRotation > 180.0f)  normalizedRotation -= 360.0f;
+        while (normalizedRotation < -180.0f) normalizedRotation += 360.0f;
+
+        if (normalizedRotation > -90.0f && normalizedRotation < 90.0f) {
+            flip = SDL_FLIP_NONE;
+        } else {
+            flip = SDL_FLIP_VERTICAL;
         }
     } else {
-        position.x -= 150 * dt;
-        flip = SDL_FLIP_NONE;
-        rotation = 0;
-    }
-
-    float normalizedRotation = rotation;
-    while (normalizedRotation > 180.0f)  normalizedRotation -= 360.0f;
-    while (normalizedRotation < -180.0f) normalizedRotation += 360.0f;
-
-    if (normalizedRotation > -90.0f && normalizedRotation < 90.0f) {
-        flip = SDL_FLIP_NONE;
-    } else {
-        flip = SDL_FLIP_VERTICAL;
+        toY += 240 * dt;
+        position.y += toY * dt;
+        rotation -= 80 * dt;
     }
 
     if (position.x < -228) {

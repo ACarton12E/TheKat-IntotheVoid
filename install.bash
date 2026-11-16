@@ -15,8 +15,8 @@ LOADTEXT="Cooking..."
 show_loading() {
     local pid=$1
     local delay=0.1
-    local spinstr='|/-\'
-    
+    local spinstr='▁▂▄▆▀▆▄▂'
+
     while kill -0 "$pid" 2>/dev/null; do
         if [ -s "build/compiler.log" ]; then
             while IFS= read -r line; do
@@ -26,20 +26,20 @@ show_loading() {
         fi
 
         local temp=${spinstr#?}
-        printf "\r [%c] $LOADTEXT " "$spinstr"
+        printf "\r %s ~> $LOADTEXT " "${spinstr:0:1}"
         spinstr=$temp${spinstr%"$temp"}
         sleep $delay
-        printf "\r"
     done
     printf "\r\033[K"
 }
+
 
 GXXVERSION=$(g++ -dumpfullversion)
 
 show_header() {
     clear
     echo ""
-    echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.12-a qua ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
+    echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.21-a lpine ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
     echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}"
     echo ""
 }
@@ -66,9 +66,8 @@ ${YELLOW}░░${WHITE}▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓${GREEN}█�
 clear
 
 echo ""
-echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.12-a qua ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
+echo -e "${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂ ${WHITE}The Katros 0.21-a lpine ${CIAN}⊃⊰⊰──∼∼∼──⊱⊱⊂${NULLC}"
 
-# --- THE KATROS ASCII ART ---
 echo -e "              ┌──┐    ┌──┐              "
 echo -e "                                        "
 echo -e "              ${YELLOW}▒${WHITE}██      ██${YELLOW}▒${NULLC}              "
@@ -88,7 +87,7 @@ echo -e "          ${YELLOW}▒▒▒▒▒${WHITE}▓▓▓▓▓▓▓▓▓�
 echo -e "                                        "
 
 echo ""
-echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}... I ${GREEN}have ${RED}3 ${BLUE}pills${NULLC}..."
+echo -e "g++ version: ${WHITE}$GXXVERSION${NULLC}... ${CIAN}I ${GREEN}have ${RED}4 ${BLUE}pills${NULLC}..."
 echo ""
 
 DEVICE=""
@@ -99,6 +98,10 @@ while true; do
     echo "2) Windows"
     echo "3) Android"
     echo ""
+    echo -e " ${WHITE}--- Experimentaltal ---${NULLC}"
+    echo ""
+    echo "4) PSVita"
+    echo ""
     echo "Choose wisely... or simply select your device :|"
 
     echo ""
@@ -108,7 +111,6 @@ while true; do
         1)
             show_header
 
-            # --- TUX ASCII ART ---
             echo -e "     ${BLACK}▒▒▒▒▒▒${NULLC}     "
             echo -e "    ${BLACK}▒${WHITE}██${BLACK}▒▒${WHITE}██${BLACK}▒    "
             echo -e "    ${BLACK}▒${WHITE}█${BLACK}▓▒▒▓${WHITE}█${BLACK}▒    "
@@ -160,6 +162,35 @@ ${NULLC}
             DEVICE="android"
             break
             ;;
+        4)
+            show_header
+
+            echo -e " ${BLUE}
+            ██████▙
+            ██▘ ▜██▋
+            ██   ▐█▋
+            ██  ▐██
+            ██ ▐██▛
+            ██
+     ██████ ██ ███
+    ██▙     ██   ▜███
+     ███▙   ██     ▜██
+        ███ ██ ██████
+        ${NULLC}
+"
+
+            echo "Oh, PSVita?! hmm..."
+            if ! command -v vdpm >/dev/null 2>&1; then
+                echo "You don't have the PSVita package manager (vdpm)"
+                exit 1
+            else
+                echo "Ok! You have the PSVita Packager Manager!"
+                DEVICE="psvita"
+                ARCHITECTURE="meh"
+                vdpm --version
+            fi
+            break
+            ;;
         *)
             show_header
             echo ""
@@ -169,10 +200,15 @@ ${NULLC}
     esac
 done
 
-
-echo "Alright! $DEVICE was selected—let's get to work! ...Wait, what architecture are you going to use?"
+if [ ! "$DEVICE" = "psvita" ]; then
+    echo "Alright! $DEVICE was selected—let's get to work! ...Wait, what architecture are you going to use?"
+fi
 
 while true; do
+    if [ "$DEVICE" = "psvita" ]; then
+        break
+    fi
+
     if [ "$DEVICE" = "linux" ]; then
         echo "1) x86_64"
         echo "2) x86"
@@ -364,7 +400,7 @@ case "$confirm" in
         if [ "$DEVICE" = "linux" ]; then
             if [ "$ARCHITECTURE" = "x86_64" ] ; then 
                 mkdir -p builder/linux/x86_64
-                g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
+                g++ $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86_64/TheKatITV -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                 show_loading $!
                 wait $!
                 RESULT=$?
@@ -373,7 +409,7 @@ case "$confirm" in
                 fi
             elif [ "$ARCHITECTURE" = "x86" ]; then 
                 mkdir -p builder/linux/x86
-                g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
+                g++ $(find src -type f -name "*.cpp") -O2 -o builder/linux/x86/TheKatITV -m32 -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer &
                 show_loading $!
                 wait $!
                 RESULT=$?
@@ -385,7 +421,7 @@ case "$confirm" in
             if [ "$ARCHITECTURE" = "x86_64" ] ; then 
                 mkdir -p builder/windows/x86_64
                 x86_64-w64-mingw32-windres src/resource.rc builder/windows/x86_64/resource.o  
-                x86_64-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
+                x86_64-w64-mingw32-g++ $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86_64/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                 LOADTEXT="Cooking... "
                 show_loading $!
                 wait $!
@@ -397,7 +433,7 @@ case "$confirm" in
             elif [ "$ARCHITECTURE" = "x86" ]; then 
                 mkdir -p builder/windows/x86
                 i686-w64-mingw32-windres src/resource.rc builder/windows/x86_64/resource.o  
-                i686-w64-mingw32-g++ -v $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
+                i686-w64-mingw32-g++ $(find src -type f -name "*.cpp") -O2 -o builder/windows/x86/TheKatITV.exe -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -static-libgcc -static-libstdc++ &
                 show_loading $!
                 wait $!
                 RESULT=$?
@@ -430,16 +466,56 @@ case "$confirm" in
             wait $!
             RESULT=$?
 
-             if [ $RESULT -eq 0 ]; then
+            if [ $RESULT -eq 0 ]; then
                 APKPATH="app/build/outputs/apk/debug/app-debug.apk"
             fi
+        elif [ "$DEVICE" = "psvita" ]; then
+
+            mkdir -p builder/psvita/
+
+            {
+                arm-vita-eabi-g++ -Wno-psabi $(find src -type f -name "*.cpp") -O2 -std=c++17 -Wl,-q \
+                -I$VITASDK/arm-vita-eabi/include \
+                -I$VITASDK/arm-vita-eabi/include/SDL2 \
+                -L$VITASDK/arm-vita-eabi/lib \
+                -o builder/psvita/TheKatITV.elf \
+                -lSDL2_mixer -lSDL2_image -lSDL2_ttf -lSDL2 \
+                -lmodplug -lopusfile -lopus -lxmp -lvorbisfile -lvorbis -logg \
+                -lwebpdemux -lwebp -ljpeg -lfreetype -lpng -lbz2 -lz -lm -lpthread \
+                -lSceDisplay_stub -lSceCtrl_stub -lSceAudio_stub -lSceAudioIn_stub \
+                -lSceSysmodule_stub -lSceGxm_stub -lSceCommonDialog_stub \
+                -lSceAppUtil_stub -lSceTouch_stub -lSceHid_stub -lSceMotion_stub && \
+                vita-elf-create builder/psvita/TheKatITV.elf builder/psvita/TheKatITV.velf && \
+                vita-make-fself -s builder/psvita/TheKatITV.velf builder/psvita/eboot.bin && \
+                vita-mksfoex -s TITLE_ID=DBK4T1TV "The Kat - Into the Void!" builder/psvita/param.sfo && \
+                vita-pack-vpk -s builder/psvita/param.sfo -b builder/psvita/eboot.bin \
+                --add src/assets=assets \
+                builder/psvita/TheKatITV.vpk
+            } &
+
+            PID=$!
+            LOADTEXT="Cooking... "
+            show_loading $PID
+
+            wait $PID
+            RESULT=$?
+
+            if [ ! $RESULT -eq 0 ]; then
+                echo "Oh :( The Compilation was Failed!"
+            fi
         fi
+
 
         if [ $RESULT -eq 0 ]; then
             show_header
             echo -e "$CPU"
             echo ""
-            echo -e "${GREEN}Boom! Now throw in some onion and get cooking!${NULLC} Do you want to open it and try it out right now?"
+
+            if [ "$DEVICE" = "psvita" ]; then
+                echo -e "${GREEN}Boom! Now throw in some onion and get cooking!${NULLC}"
+            else
+                echo -e "${GREEN}Boom! Now throw in some onion and get cooking!${NULLC} Do you want to open it and try it out right now?"
+            fi
 
             if [ "$DEVICE" = "linux" ]; then
                 echo "
@@ -461,7 +537,11 @@ case "$confirm" in
                 "
             elif [ "$DEVICE" = "android" ]; then
                 echo "
-                    ¡Your APK was saved in app/build/outputs/apk!
+                    Your APK was saved in app/build/outputs/apk!
+                "
+            elif [ "$DEVICE" = "psvita" ]; then
+                echo "
+                    Your vpk was saved in builder/psvita!
                 "
             fi
 
@@ -485,11 +565,15 @@ case "$confirm" in
         ;;
 esac
 
-if [ "$DEVICE" != "android" ]; then
-    read -p "Open? [y/N]: " open
+if [ "$DEVICE" != "psvita" ]; then
+    if [ "$DEVICE" != "android" ]; then
+        read -p "Open? [y/N]: " open
+    else
+        read -p "Install? (Device Detected: $ADBDEVICE) [y/N]: " open
+
+    fi
 else
-    read -p "Install? (Device Detected: $ADBDEVICE) [y/N]: " open
-    
+    exit 0
 fi
 
 case "$open" in

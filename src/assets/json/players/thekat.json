@@ -8,15 +8,108 @@
         "Hate Fish?": true,
         "Can Swim?": true,
         "Jump Speed": 150,
-        "Efficiency": "B"
+        "Efficiency": "B",
+        
+        "ASKE": {
+            "ArmorOffsetX": 0,
+            "ArmorOffsetY": 0
+        }
     },
 
     "Animations": {
-        "Idle": "assets/Images/Kats/The Kat/Idle/idle.png",
-        "Walk": "assets/Images/Kats/The Kat/Walk/walk.png",
-        "Jump": "assets/Images/Kats/The Kat/JumpFall/jump.png",
-        "Fall": "assets/Images/Kats/The Kat/JumpFall/fall.png",
-        "Swim": "assets/Images/Kats/The Kat/Swim/swim.png",
-        "Damage": "assets/Images/Kats/The Kat/Damage/damage.png"
+    	"Normal": {
+    	    "Idle": "assets/Images/Kats/The Kat/Idle/idle.png",
+	    "Walk": "assets/Images/Kats/The Kat/Walk/walk.png",
+	    "Jump": "assets/Images/Kats/The Kat/JumpFall/jump.png",
+	    "Fall": "assets/Images/Kats/The Kat/JumpFall/fall.png",
+	    "Swim": "assets/Images/Kats/The Kat/Swim/swim.png",
+	    "Flying": "assets/Images/Kats/The Kat/Flying/flying.png",
+	    "BadFlying": "assets/Images/Kats/The Kat/AHHH!!!!/1.png",
+	    "FloorSplash": "assets/Images/Kats/The Kat/AHHH!!!!/2.png",
+	    "Damage": "assets/Images/Kats/The Kat/Damage/damage.png"
+    	},
+    	"ASKE": {
+    	    "Idle": "assets/Images/Kats/The Kat/A.S.K.E/Idle/idle.png",
+    	    "Walk": "assets/Images/Kats/The Kat/A.S.K.E/Walk/walk.png",
+    	    "Jump": "assets/Images/Kats/The Kat/A.S.K.E/JumpFall/jump.png",
+    	    "Fall": "assets/Images/Kats/The Kat/A.S.K.E/JumpFall/fall.png",
+    	    "Swim": "assets/Images/Kats/The Kat/A.S.K.E/Swim/swim.png"
+    	},
+    	"Armors": {
+	    "1": "assets/Images/Kats/The Kat/A.S.K.E/Guns/magnum.png",
+    	    "2": "assets/Images/Kats/The Kat/A.S.K.E/Guns/rifle.png",
+    	    "3": "assets/Images/Kats/The Kat/A.S.K.E/Guns/shotgun.png",
+    	    "4": "assets/Images/Kats/The Kat/A.S.K.E/Guns/tmp.png",
+    	    "5": "assets/Images/Kats/The Kat/A.S.K.E/Guns/flamethrower.png"
+    	}
+    },
+    
+    "ARMOR_PROPERTYS": {
+    	"1": {
+    	    "name": "magnum",
+	    "size": 60,
+    	    "cooldown": 0.5,
+	    "canpress": false,
+	    "sound": "assets/Audio/Sounds/gun.ogg",
+    	    "particles": {
+    	        "active": false,
+    	        "fire": false,
+		"assets": null,
+    	        "count": 0
+    	    }
+    	},
+    	
+    	"2": {
+    	    "name": "rifle",
+	    "size": 120,
+    	    "cooldown": 1,
+	    "canpress": false,
+	    "sound": "assets/Audio/Sounds/gun.ogg",
+    	    "particles": {
+    	        "active": false,
+    	        "fire": false,
+    	        "assets": null,
+    	        "count": 0
+    	    }
+    	},
+    	"3": {
+    	    "name": "shotgun",
+	    "size": 300,
+    	    "cooldown": 2,
+	    "canpress": false,
+	    "sound": "assets/Audio/Sounds/gun.ogg",
+    	    "particles": {
+    	        "active": false,
+    	        "fire": false,
+    	        "assets": null,
+    	        "count": 0
+    	    }
+    	},
+    	"4": {
+    	    "name": "TMP",
+	    "size": 60,
+	    "cooldown": 0.07,
+	    "canpress": true,
+	    "sound": "assets/Audio/Sounds/ttmpeg.ogg",
+    	    "particles": {
+    	        "active": false,
+    	        "assets": null,
+    	        "fire": false,
+    	        "count": 0
+    	    }
+    	},
+    	"5": {
+    	    "name": "flamethrower",
+	    "size": 200,
+    	    "cooldown": 0.01,
+	    "canpress": true,
+	    "sound": "assets/Audio/Sounds/flame.ogg",
+    	    "particles": {
+    	        "active": true,
+    	        "fire": true,
+    	        "assets": "assets/Images/Particles/Smoke.png",
+		"count": 200
+    	    }
+    	}
     }
 }

@@ -12,6 +12,8 @@ class Fishoder {
         bool active = true;
         bool dead = false;
         float velocity = 120;
+        float velocityY = -120;
+
         float rotation = 0;
 
         SDL_FRect collide = {-1000, -1000, 156, 108};

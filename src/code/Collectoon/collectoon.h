@@ -1,11 +1,9 @@
 #ifndef COLLECTOON_H
 #define COLLECTOON_H
 
-#include "../../include/SDL2/SDL.h"
 #include "../../include/SDL2/SDL_rect.h"
 #include "../../include/SDL2/SDL_render.h"
 #include "../../include/SDL2/SDL_stdinc.h"
-#include "../Platform/platform.h"
 
 enum class CollectoonType {
     Food, Disk, Aloy, Power
@@ -19,11 +17,12 @@ enum class FoodType {
 class Collectoon {
     private:
         SDL_Texture* sprite;
-        CollectoonType type;
         float timeleftdt;
         Uint8 opacity = 255;
     public:
         SDL_FPoint position;
+        CollectoonType type;
+        FoodType foodType;
         int id = 0;
         SDL_FRect collide = {0, 0, 32, 32};
         bool Katched = false;

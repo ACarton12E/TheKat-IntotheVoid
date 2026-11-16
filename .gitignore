@@ -2,6 +2,6 @@ builder
 build
 app/build
 app/.cxx
-.gradle
+.gradle 
 .ase
 .import
